@@ -139,6 +139,19 @@ template "#{node[:riak][:package][:config_dir]}/vm.args" do
   mode 0644
 end
 
+
+usretcdir = "/usr/lib64/riak/etc/"
+directory usretcdir do end
+cookbook_file usretcdir + "cert.pem" do
+  source "cert.pem"
+  mode "0644"
+end
+cookbook_file usretcdir + "key.pem" do
+  source "key.pem"
+  mode "0644"
+end
+
+
 if node[:riak][:package][:type].eql?("binary")
   service "riak" do
     supports :start => true, :stop => true, :restart => true
